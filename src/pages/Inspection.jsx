@@ -100,7 +100,7 @@ const Inspection = () => {
 
     // Update Header
     useEffect(() => {
-        setTitle('Inspections');
+        setTitle('Cars Lists');
         setSearchContent(
             <div className="relative group w-full max-w-lg">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-hover:text-primary transition-colors" />
@@ -131,7 +131,7 @@ const Inspection = () => {
         const fetchData = async () => {
             try {
                 // If we have cached data, we don't necessarily show loader
-                const response = await fetch('https://ob-dealerapp-kong.onrender.com/api/car/cars-list', {
+                const response = await fetch('https://otobix-app-backend-development.onrender.com/api/car/cars-list', {
                     headers: {
                         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDBhYzc2NTA4OGQxYTA2ODc3MDU0NCIsInVzZXJOYW1lIjoiY3VzdG9tZXIiLCJ1c2VyVHlwZSI6IkN1c3RvbWVyIiwiaWF0IjoxNzY0MzMxNjMxLCJleHAiOjIwNzk2OTE2MzF9.oXw1J4ca1XoIAg-vCO2y0QqZIq0VWHdYBrl2y9iIv4Q'
                     }
@@ -305,7 +305,7 @@ const Inspection = () => {
                                 data={currentData}
                                 pagination={pagination}
                                 keyField="id"
-                                onRowClick={(row) => navigate(`/inspection/${row.id}`)}
+                                onRowClick={(row) => navigate(`/carsList/${row.id}`)}
                             />
                         </div>
 

@@ -11,10 +11,10 @@ const Table = ({
     emptyMessage = "No records found"
 }) => {
     return (
-        <div className="flex flex-col h-full bg-white border-b border-gray-100 overflow-hidden">
+        <div className="px-4 flex flex-col h-full bg-white border-b border-gray-100 overflow-hidden">
             <div className="flex-1 overflow-auto bg-white">
                 <table className="w-full text-left border-collapse">
-                    <thead className="sticky top-0 z-10 bg-gray-50/95 backdrop-blur-sm border-b border-gray-200">
+                    <thead className="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-200">
                         <tr>
                             {columns.map((col, index) => (
                                 <th
@@ -33,7 +33,7 @@ const Table = ({
                     <tbody className="divide-y divide-gray-100">
                         {isLoading ? (
                             <tr>
-                                <td colSpan={columns.length} className="px-4 py-20 text-center text-slate-400">
+                                <td colSpan={columns.length} className="px-4 py-20 h-[calc(100vh-400px)] text-center text-slate-400">
                                     <div className="flex flex-col items-center justify-center gap-2">
                                         <Loader2 className="w-6 h-6 animate-spin text-primary" />
                                         <span className="text-xs">Loading data...</span>
@@ -77,7 +77,7 @@ const Table = ({
 
             {/* Pagination */}
             {pagination && (
-                <div className="flex-none flex flex-wrap items-center justify-between gap-4 py-1.5 bg-gray-50 border-t border-gray-200 text-[11px] text-slate-500">
+                <div className="flex-none flex flex-wrap items-center justify-between gap-4 py-1.5 border-t border-gray-200 text-[11px] text-slate-500">
                     <div>
                         Showing <span className="font-medium text-slate-900">{pagination.startIndex + 1}</span> to <span className="font-medium text-slate-900">{Math.min(pagination.endIndex, pagination.totalItems)}</span> of <span className="font-medium text-slate-900">{pagination.totalItems}</span>
                     </div>

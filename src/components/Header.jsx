@@ -14,7 +14,7 @@ const Header = ({ onMenuClick }) => {
                 >
                     <Menu className="w-6 h-6" />
                 </button>
-                {title && <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">{title}</h1>}
+                {title && <h1 className="text-3xl text-slate-900 tracking-tighter font-semibold">{title}</h1>}
             </div>
 
             <div className="flex-1 flex items-center justify-end gap-6 ml-10">

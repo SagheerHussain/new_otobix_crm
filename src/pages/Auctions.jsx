@@ -196,7 +196,7 @@ const Auctions = () => {
         setLoadingStates(prev => ({ ...prev, [tabLabel]: true }));
         try {
             const res = await fetch(
-                `https://ob-dealerapp-kong.onrender.com/api/car/cars-list?auctionStatus=${status}`,
+                `https://otobix-app-backend-development.onrender.com/api/car/cars-list?auctionStatus=${status}`,
                 {
                     headers: {
                         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDBhYzc2NTA4OGQxYTA2ODc3MDU0NCIsInVzZXJOYW1lIjoiY3VzdG9tZXIiLCJ1c2VyVHlwZSI6IkN1c3RvbWVyIiwiaWF0IjoxNzY0MzMxNjMxLCJleHAiOjIwNzk2OTE2MzF9.oXw1J4ca1XoIAg-vCO2y0QqZIq0VWHdYBrl2y9iIv4Q'

@@ -11,6 +11,8 @@ import Auctions from './pages/Auctions';
 import Sales from './pages/Sales';
 import LoginPage from './pages/LoginPage';
 import Authenticated from './components/Authenticated';
+import CustomersPage from './pages/CustomersPage';
+import BidsHistory from './pages/BidsHistory';
 
 function App() {
   return (
@@ -22,16 +24,17 @@ function App() {
             <Route index element={<Home />} />
             <Route path="administration" element={<Administration />} />
             <Route path="users" element={<Users />} />
+            <Route path="customers" element={<CustomersPage />} />
             <Route path="telecalling" element={<Telecalling />} />
-            <Route path="inspection" element={<Inspection />} />
-            <Route path="inspection/:id" element={<InspectionDetails />} />
+            <Route path="carsList" element={<Inspection />} />
+            <Route path="carsList/:id" element={<InspectionDetails />} />
+            <Route path="bidsHisotry" element={<BidsHistory />} />
             <Route path="sales" element={<Sales />} />
             <Route path="auctions" element={<Auctions />} />
             <Route path="retail" element={<div className="p-10 text-center text-gray-500">Retail View Placeholder</div>} />
             <Route path="operations" element={<div className="p-10 text-center text-gray-500">Operations View Placeholder</div>} />
             <Route path="accounts" element={<div className="p-10 text-center text-gray-500">Accounts View Placeholder</div>} />
             <Route path="reports" element={<div className="p-10 text-center text-gray-500">Reports View Placeholder</div>} />
-            <Route path="bids" element={<div className="p-10 text-center text-gray-500">Bids View Placeholder</div>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Route>

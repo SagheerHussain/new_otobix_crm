@@ -524,13 +524,13 @@ const InspectionDetails = () => {
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
     useEffect(() => {
-        setTitle("Inspection Intelligence");
+        setTitle("Car List Detail");
         setActionsContent(null);
 
         const fetchDetails = async () => {
             try {
                 const res = await fetch(
-                    `https://ob-dealerapp-kong.onrender.com/api/car/details/${id}`,
+                    `https://otobix-app-backend-development.onrender.com/api/car/details/${id}`,
                     {
                         headers: {
                             Authorization:
