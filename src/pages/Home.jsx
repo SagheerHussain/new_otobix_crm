@@ -198,11 +198,6 @@ const Home = () => {
 
       <QuickActions />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-0">
-        <TodaysTasks />
-
-        <WeeklyPerformance />
-      </div>
 
       {/* ✅ Chart ONLY for Sales Manager */}
       {isSalesManager ? (
@@ -213,7 +208,13 @@ const Home = () => {
             <DealersOverviewChart dealersData={dealersData} />
           )}
         </div>
-      ) : null}
+      ) : 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-0">
+        <TodaysTasks />
+        <WeeklyPerformance />
+      </div>
+      }
+
     </div>
   );
 };
