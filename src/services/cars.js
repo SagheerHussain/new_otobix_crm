@@ -37,3 +37,31 @@ export const fetchCarsList = async ({ status, page = 1, limit = 10 }) => {
 
   return res.data;
 };
+
+export const fetchCarDetails = async (carId) => {
+  const res = await fetch(`${BASE_URL}/car/details/${carId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    },
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data?.error || "Failed to fetch car details");
+  return data;
+};
+
+// POST: /api/admin/cars/get-highest-bids-on-car
+export const fetchHighestBidsOnCar = async (carId) => {
+  const res = await fetch(`${BASE_URL}/admin/cars/get-highest-bids-on-car`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    },
+    body: JSON.stringify({ carId }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data?.error || "Failed to fetch highest bids");
+  return data;
+};

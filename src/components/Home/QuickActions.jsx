@@ -43,8 +43,8 @@ export default function QuickActions() {
             :
             <>
               <ActionButton icon={History} label="Bids" bgClass="bg-yellow-100" colorClass="text-yellow-600" to="/bids" />
-              <ActionButton icon={ClipboardCheck} label="Inspection" bgClass="bg-orange-100" colorClass="text-orange-600" to="/inspection" />
-              <ActionButton icon={Car} label="Cars Overview" bgClass="bg-green-100" colorClass="text-green-600" to="/inspection" />
+              <ActionButton icon={ClipboardCheck} label="Inspection" bgClass="bg-orange-100" colorClass="text-orange-600" to="/inspections" />
+              <ActionButton icon={Car} label="Cars Overview" bgClass="bg-green-100" colorClass="text-green-600" to="/carsOverview" />
             </>
         }
         {/* <ActionButton icon={PhoneCall} label="Telecalling" bgClass="bg-blue-100" colorClass="text-primary" to="/telecalling" /> */}

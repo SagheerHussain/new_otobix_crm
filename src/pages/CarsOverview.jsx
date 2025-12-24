@@ -8,8 +8,9 @@ import CarsTabs from "../components/Cars Overview/CarsTabs";
 import StatusBadge from "../components/Cars Overview/StatusBadge";
 
 import { fetchCarsSummaryCounts, fetchCarsList } from "../services/cars";
+import { useNavigate } from "react-router-dom";
 
-const LIMIT = 15;
+const LIMIT = 10;
 
 const formatMoney = (n) => `Rs. ${Number(n || 0).toLocaleString("en-IN")}/-`;
 
@@ -44,6 +45,8 @@ export default function CarsOverview() {
         totalPages: 1,
     });
 
+    const navigate = useNavigate();
+
     // debounce search
     useEffect(() => {
         const t = setTimeout(() => setDebouncedSearch(searchQuery.trim()), 300);
@@ -76,6 +79,7 @@ export default function CarsOverview() {
             try {
                 setLoadingSummary(true);
                 const res = await fetchCarsSummaryCounts();
+                console.log("res cars stats ==== >", res)
                 setSummary(res);
             } catch (e) {
                 console.error("Cars summary error:", e);
@@ -98,8 +102,10 @@ export default function CarsOverview() {
                     all: "all",
                     upcoming: "upcoming",
                     live: "live",
-                    ended: "auctionEnded",
+                    ended: "liveAuctionEnded",
                     otobuy: "otobuy",
+                    sold: "sold",
+                    removed: "removed",
                 };
 
                 const res = await fetchCarsList({
@@ -164,13 +170,15 @@ export default function CarsOverview() {
 
     // tabs counts from summary
     const tabs = useMemo(() => {
-        const d = summary?.data || {};
+        const d = summary || {};
         return [
             { label: "All Cars", value: "all", count: d.totalCars ?? d.totalcars ?? 0 },
             { label: "Upcoming", value: "upcoming", count: d.upcomingCars ?? 0 },
             { label: "Live", value: "live", count: d.liveCars ?? 0 },
             { label: "Auction Ended", value: "ended", count: d.auctionEndedCars ?? d.endedCars ?? 0 },
             { label: "Otobuy", value: "otobuy", count: d.otobuyCars ?? 0 },
+            { label: "Sold", value: "sold", count: d.soldCars ?? 0 },
+            { label: "Removed", value: "removed", count: d.removedCars ?? 0 },
         ];
     }, [summary]);
 
@@ -272,6 +280,7 @@ export default function CarsOverview() {
                         isLoading={loadingRows}
                         pagination={pagination}
                         emptyMessage="No cars found"
+                        onRowClick={(row) => navigate(`/carsOverview/${row.id}`)}
                     />
                 </div>
             </div>

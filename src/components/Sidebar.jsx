@@ -17,8 +17,10 @@ import {
   PhoneCall,
   CreditCard,
   BarChart2,
+  CarFront,
 } from "lucide-react";
 import amitProfile from "../assets/amit-parekh.png";
+import logo from "/images/logo.webp"
 
 const Sidebar = ({ isOpen, onClose }) => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -63,10 +65,10 @@ const Sidebar = ({ isOpen, onClose }) => {
     if (role === "sales manager") {
       return [
         { name: "Home", path: "/", icon: Home },
-        { name: "Cars Listing", path: "/carsList", icon: ClipboardCheck },
-        { name: "Inspection", path: "/inspection", icon: ClipboardCheck },
+        { name: "Cars Listing", path: "/carsList", icon: CarFront },
+        { name: "Inspection", path: "/inspections", icon: ClipboardCheck },
         { name: "Bids History", path: "/bidsHisotry", icon: History },
-        { name: "Cars Overview", path: "/cars-overview", icon: Car },
+        { name: "Cars Overview", path: "/carsOverview", icon: Car },
         ...disabledCommon,
       ];
     }
@@ -92,18 +94,19 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Sidebar Container */}
       <div
         className={`
-          fixed md:static inset-y-0 left-0 z-30
-          w-64 md:w-[20%] bg-background-dark text-white flex flex-col shadow-2xl
+          fixed inset-y-0 left-0 z-30
+          w-64 md:w-[15%] bg-[#f4f9ff] text-white flex flex-col shadow-2xl
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
-        <div className="p-6 flex items-center justify-between border-b border-slate-800">
+        <div className="p-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-400 rounded-lg flex items-center justify-center shadow-lg">
+            {/* <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-400 rounded-lg flex items-center justify-center shadow-lg">
               <span className="font-bold text-xl">O</span>
             </div>
-            <span className="text-xl font-bold tracking-wide text-white">OTOBIX</span>
+            <span className="text-xl font-bold tracking-wide text-white">OTOBIX</span> */}
+            <img src={logo} alt="Otobix Logo" />
           </div>
           <button onClick={onClose} className="md:hidden text-gray-400 hover:text-white">
             <X className="w-6 h-6" />
@@ -118,10 +121,10 @@ const Sidebar = ({ isOpen, onClose }) => {
                 className="flex items-center justify-between px-4 py-3 rounded-lg opacity-40 cursor-not-allowed grayscale"
               >
                 <div className="flex items-center space-x-3">
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-medium">{item.name}</span>
+                  <item.icon className="w-5 h-5 text-black" />
+                  <span className="font-medium text-black">{item.name}</span>
                 </div>
-                <span className="text-[8px] font-black uppercase tracking-widest bg-white/10 px-1 py-0.5 rounded">
+                <span className="text-[8px] text-black font-black uppercase tracking-widest bg-black/10 px-1 py-0.5 rounded">
                   Soon
                 </span>
               </div>
@@ -134,7 +137,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                   `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
                     isActive
                       ? "bg-primary shadow-md translate-x-1"
-                      : "hover:bg-white/10 hover:text-white"
+                      : "hover:bg-white/10 text-black"
                   }`
                 }
               >
@@ -148,7 +151,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         </nav>
 
         {/* Bottom Profile */}
-        <div className="p-4 border-t border-slate-800 relative">
+        <div className="p-4 relative">
           {isProfileMenuOpen && (
             <div className="absolute bottom-full left-4 right-4 mb-2 bg-white rounded-xl shadow-lg py-1 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
               <NavLink
@@ -180,15 +183,15 @@ const Sidebar = ({ isOpen, onClose }) => {
 
           <button
             onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-            className="flex items-center gap-3 w-full p-2 hover:bg-slate-800/50 rounded-xl transition-all group"
+            className="flex items-center gap-3 w-full p-2 cursor-pointer rounded-xl transition-all group"
           >
             <div
-              className="w-10 h-10 rounded-full bg-cover bg-center ring-2 ring-primary/30 group-hover:ring-primary transition-all"
+              className="w-10 h-10 rounded-full bg-cover bg-center ring-2 ring-primary/30 transition-all"
               style={{ backgroundImage: `url(${amitProfile})` }}
             />
             <div className="flex-1 text-left">
-              <h4 className="text-sm font-semibold text-white">{profileName}</h4>
-              <p className="text-xs text-slate-400">{profileRoleLabel}</p>
+              <h4 className="text-sm font-semibold text-black">{profileName}</h4>
+              <p className="text-xs text-black">{profileRoleLabel}</p>
             </div>
             <ChevronUp
               className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${

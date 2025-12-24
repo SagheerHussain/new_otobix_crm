@@ -10,7 +10,7 @@ export default function CarsTabs({ tabs, active, onChange }) {
           <button
             key={t.value}
             onClick={() => onChange(t.value)}
-            className={`flex h-10 shrink-0 items-center justify-center px-4 text-[11px] font-black uppercase tracking-widest transition-all gap-3 border
+            className={`flex cursor-pointer h-10 shrink-0 items-center justify-center px-4 text-[11px] font-black uppercase tracking-widest transition-all gap-3 border
               ${isActive
                 ? "bg-primary text-white border-primary shadow-md"
                 : "bg-white text-slate-500 border-slate-200 hover:bg-slate-50"

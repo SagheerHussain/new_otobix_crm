@@ -3,10 +3,10 @@ import EntryOverviewStat from "../EntryOverviewStat"; // or wherever you placed 
 import { Car, Clock, Activity, Flame, Tag } from "lucide-react";
 
 export default function CarsStats({ summary, loading }) {
-  const d = summary?.data || {};
+  const d = summary || {};
 
   const cards = [
-    { title: "Total Cars", value: d.totalCars ?? d.totalcars ?? 0, icon: Car },
+    { title: "Total Cars", value: d.totalCars ?? 0, icon: Car },
     { title: "Upcoming Cars", value: d.upcomingCars ?? 0, icon: Clock },
     { title: "Live Cars", value: d.liveCars ?? 0, icon: Activity },
     { title: "Auction Ended Cars", value: d.auctionEndedCars ?? d.endedCars ?? 0, icon: Flame },
