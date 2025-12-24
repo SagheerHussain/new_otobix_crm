@@ -111,7 +111,7 @@ const CarOverviewwDetail = () => {
     <div className="h-full bg-background-light">
       {/* Top Bar */}
       <div className="px-6 pt-5 pb-3">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex 2xl:flex-row flex-col items-start justify-between gap-4">
           <div className="flex items-start gap-3">
             <button
               onClick={() => navigate(-1)}
@@ -121,7 +121,7 @@ const CarOverviewwDetail = () => {
               <ArrowLeft className="w-5 h-5" />
             </button>
 
-            <div>
+            <div className="">
               <div className="flex items-center gap-2">
                 <div className="text-2xl font-semibold text-slate-900 leading-tight">{title || "Car Detail"}</div>
                 <StatusBadge status={car?.auctionStatus} />
@@ -161,12 +161,12 @@ const CarOverviewwDetail = () => {
                 </div>
               }
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-                <div className="lg:col-span-7">
+              <div className="grid grid-cols-1 2xl:grid-cols-12 gap-5">
+                <div className="2xl:col-span-7">
                   <CarImageGallery car={car} />
                 </div>
 
-                <div className="lg:col-span-5 space-y-4">
+                <div className="2xl:col-span-5 space-y-4">
                   <KeyValueGrid items={quickItems} />
 
                   {/* Small “WOW” highlight */}
@@ -221,7 +221,7 @@ const CarOverviewwDetail = () => {
             <DealerHighestBids dealers={highestBids} isLoading={loadingBids} />
 
             <SectionCard title="Commercial">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
                 <Metric title="Price Discovery" value={formatMoneyPKR(car?.priceDiscovery)} />
                 <Metric title="Customer Expected" value={formatMoneyPKR(car?.customerExpectedPrice)} />
                 <Metric title="Fixed Margin" value={car?.fixedMargin ?? "-"} suffix="%" />

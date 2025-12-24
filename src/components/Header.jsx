@@ -6,7 +6,7 @@ const Header = ({ onMenuClick }) => {
     const { title, searchContent, actionsContent } = useHeader();
 
     return (
-        <header className="sticky top-0 z-20 h-10 flex items-center md:px-0 bg-transparent">
+        <header className="bg-[#F9F7F7] p-2 sticky top-0 z-20 flex items-center">
             <div className="flex items-center gap-3 shrink-0">
                 <button
                     onClick={onMenuClick}

@@ -16,7 +16,7 @@ const Layout = () => {
                 {/* 2% Margin on Desktop */}
                 <div className="hidden md:block md:w-[2%] shrink-0" />
 
-                <div className="flex-1 md:flex-none md:w-[80%] md:ms-[15%] flex flex-col relative pt-2">
+                <div className="flex-1 md:flex-none md:w-[70%] xl:w-[75%] md:ms-[25%] xl:ms-[20%] flex flex-col relative pt-2">
                     <Header onMenuClick={() => setIsSidebarOpen(true)} />
 
                     {/* 2% Top Margin on Desktop */}

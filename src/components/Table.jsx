@@ -13,7 +13,7 @@ const Table = ({
     return (
         <div className="px-4 flex flex-col h-full bg-white border-b border-gray-100 overflow-hidden">
             <div className="flex-1 overflow-auto bg-white">
-                <table className="w-full text-left border-collapse">
+                <table className="min-w-[1400px] w-full text-left border-collapse">
                     <thead className="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-200">
                         <tr>
                             {columns.map((col, index) => (
