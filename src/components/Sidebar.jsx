@@ -95,7 +95,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       <div
         className={`
           fixed inset-y-0 left-0 z-30
-          w-64 md:w-[25%] xl:w-[20%] bg-[#f4f9ff] text-white flex flex-col shadow-2xl
+          w-64 md:w-[25%] xl:w-[20%] 2xl:w-[15%] bg-[#f4f9ff] text-white flex flex-col shadow-2xl
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}

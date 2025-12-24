@@ -16,6 +16,7 @@ import BidsHistory from './pages/BidsHistory';
 import CarsOverview from './pages/CarsOverview';
 import CarOverviewwDetail from './pages/CarOverviewDetail';
 import InspectionRequests from './pages/InspectionRequests';
+import KAMManagement from './pages/KAMManagement';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="inspections" element={<InspectionRequests />} />
             <Route path="sales" element={<Sales />} />
             <Route path="auctions" element={<Auctions />} />
+            <Route path="kams" element={<KAMManagement />} />
             <Route path="retail" element={<div className="p-10 text-center text-gray-500">Retail View Placeholder</div>} />
             <Route path="operations" element={<div className="p-10 text-center text-gray-500">Operations View Placeholder</div>} />
             <Route path="accounts" element={<div className="p-10 text-center text-gray-500">Accounts View Placeholder</div>} />

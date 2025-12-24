@@ -69,6 +69,7 @@ const Administration = () => {
                     bgClass="bg-purple-50"
                     colorClass="text-purple-600"
                     hoverBgClass="group-hover:bg-purple-100"
+                    to="/kams"
                 />
 
                 <AdminCard

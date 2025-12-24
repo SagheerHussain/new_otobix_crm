@@ -129,7 +129,7 @@ const InspectionRequests = () => {
           </div>
         ) : (
           <div className="px-4 md:px-0">
-            <div className="bg-white border border-gray-200 shadow-sm">
+            <div className="h-[calc(100vh-320px)] bg-white border border-gray-200">
               <Table
                 columns={inspectionRequestsColumns}
                 data={rows}
