@@ -8,6 +8,8 @@ import { useHeader } from "../context/HeaderContext";
 import AtAGlance from "../components/Home/AtAGlance";
 import QuickActions from "../components/Home/QuickActions";
 import DealersOverviewChart from "../components/Home/DealersOverviewChart";
+import TodaysTasks from "../components/Home/TodaysTasks";
+import WeeklyPerformance from "../components/Home/WeeklyPerformance";
 
 import { fetchAdminSummary, fetchSalesManagerUsersLength, fetchDealersByMonths } from "../services/homeStats";
 
@@ -195,6 +197,12 @@ const Home = () => {
       <AtAGlance cards={glanceCards} loading={loadingGlance} />
 
       <QuickActions />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-0">
+        <TodaysTasks />
+
+        <WeeklyPerformance />
+      </div>
 
       {/* ✅ Chart ONLY for Sales Manager */}
       {isSalesManager ? (

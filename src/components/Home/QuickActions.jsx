@@ -38,6 +38,7 @@ export default function QuickActions() {
             <ActionButton icon={Settings} label="Administration" bgClass="bg-slate-100" colorClass="text-slate-600" to="/administration" />
             <ActionButton icon={Hammer} label="Auctions" bgClass="bg-rose-100" colorClass="text-rose-600" to="/administration" />
             <ActionButton icon={UsersRound} label="Customers" bgClass="bg-amber-100" colorClass="text-amber-600" to="/bids" />
+            <ActionButton icon={DollarSign} label="Sales" bgClass="bg-green-100" colorClass="text-green-600" to="/bids" />
           </>
             :
             <>
@@ -48,10 +49,11 @@ export default function QuickActions() {
         }
         {/* <ActionButton icon={PhoneCall} label="Telecalling" bgClass="bg-blue-100" colorClass="text-primary" to="/telecalling" /> */}
         {/* <ActionButton icon={DollarSign} label="Sales" bgClass="bg-green-100" colorClass="text-green-600" to="/sales" /> */}
-        <ActionButton icon={ShoppingBag} label="Retail" bgClass="bg-pink-100" colorClass="text-pink-600" to="/retail" disabled />
-        <ActionButton icon={Briefcase} label="Operations" bgClass="bg-zinc-100" colorClass="text-zinc-600" to="/operations" disabled />
-        <ActionButton icon={CreditCard} label="Accounts" bgClass="bg-indigo-100" colorClass="text-indigo-600" to="/accounts" disabled />
-        <ActionButton icon={BarChart2} label="Reports" bgClass="bg-purple-100" colorClass="text-purple-600" to="/reports" disabled />
+        <ActionButton icon={ShoppingBag} label="Retail" bgClass="bg-pink-100" colorClass="text-pink-600" to="/retail" />
+        <ActionButton icon={Briefcase} label="Operations" bgClass="bg-zinc-100" colorClass="text-zinc-600" to="/operations" />
+        <ActionButton icon={CreditCard} label="Accounts" bgClass="bg-indigo-100" colorClass="text-indigo-600" to="/accounts" />
+        <ActionButton icon={BarChart2} label="Reports" bgClass="bg-purple-100" colorClass="text-purple-600" to="/reports" />
+        <ActionButton icon={Gavel} label="Bids" bgClass="bg-emerald-100" colorClass="text-emerald-600" to="/bids" />
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import Authenticated from './components/Authenticated';
 import CustomersPage from './pages/CustomersPage';
 import BidsHistory from './pages/BidsHistory';
+import CarsOverview from './pages/CarsOverview';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="carsList" element={<Inspection />} />
             <Route path="carsList/:id" element={<InspectionDetails />} />
             <Route path="bidsHisotry" element={<BidsHistory />} />
+            <Route path="carsOverview" element={<CarsOverview />} />
             <Route path="sales" element={<Sales />} />
             <Route path="auctions" element={<Auctions />} />
             <Route path="retail" element={<div className="p-10 text-center text-gray-500">Retail View Placeholder</div>} />

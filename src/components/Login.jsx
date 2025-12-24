@@ -5,6 +5,9 @@ import logo from "/images/logo.webp";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../components/ToastNotifications";
 
+// ✅ add this
+import { Eye, EyeOff } from "lucide-react";
+
 export default function Login() {
   const toast = useToast();
   const navigate = useNavigate();
@@ -16,6 +19,9 @@ export default function Login() {
   });
 
   const [loading, setLoading] = useState(false);
+
+  // ✅ add this
+  const [showPassword, setShowPassword] = useState(false);
 
   const setField = (key) => (e) =>
     setForm((p) => ({ ...p, [key]: e.target.value }));
@@ -77,21 +83,9 @@ export default function Login() {
               Username
             </label>
             <input
-              value={form.userName}          // ✅ fix (was form.identifier)
+              value={form.userName}
               onChange={setField("userName")}
-              placeholder="e.g. sagheer or DEALER"
-              className="w-full h-[46px] rounded-[12px] border border-[#e7e7ee] px-4 text-[#111827] placeholder:text-[#a3a7b0]
-                         focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100"
-            />
-
-            <label className="block text-[13px] font-semibold text-[#111827] mt-5 mb-2">
-              Phone Number
-            </label>
-            <input
-              value={form.phoneNumber}
-              onChange={setField("phoneNumber")}
-              placeholder="e.g. 03001234567"
-              inputMode="tel"
+              placeholder="e.g. amitparekh007"
               className="w-full h-[46px] rounded-[12px] border border-[#e7e7ee] px-4 text-[#111827] placeholder:text-[#a3a7b0]
                          focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100"
             />
@@ -102,11 +96,35 @@ export default function Login() {
               </label>
             </div>
 
+            {/* ✅ replace password input with wrapper + icon */}
+            <div className="relative">
+              <input
+                value={form.password}
+                onChange={setField("password")}
+                placeholder="amit123"
+                type={showPassword ? "text" : "password"}
+                className="w-full h-[46px] rounded-[12px] border border-[#e7e7ee] px-4 pr-12 text-[#111827] placeholder:text-[#a3a7b0]
+                           focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((s) => !s)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b7280] hover:text-[#111827]"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <Eye /> : <EyeOff />}
+              </button>
+            </div>
+
+            <label className="block text-[13px] font-semibold text-[#111827] mt-5 mb-2">
+              Phone Number
+            </label>
             <input
-              value={form.password}
-              onChange={setField("password")}
-              placeholder="••••••••"
-              type="password"
+              value={form.phoneNumber}
+              onChange={setField("phoneNumber")}
+              placeholder="e.g. 987654321"
+              inputMode="tel"
               className="w-full h-[46px] rounded-[12px] border border-[#e7e7ee] px-4 text-[#111827] placeholder:text-[#a3a7b0]
                          focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100"
             />

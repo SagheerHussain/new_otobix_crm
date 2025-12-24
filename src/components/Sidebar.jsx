@@ -14,6 +14,7 @@ import {
   History,
   ShoppingBag,
   Briefcase,
+  PhoneCall,
   CreditCard,
   BarChart2,
 } from "lucide-react";
@@ -44,15 +45,17 @@ const Sidebar = ({ isOpen, onClose }) => {
     ],
     []
   );
-
+  
   // ✅ menu by role + disabled items
   const menuItems = useMemo(() => {
     if (role === "admin") {
       return [
         { name: "Home", path: "/", icon: Home },
         { name: "Administration", path: "/administration", icon: Settings },
+        { name: "Telecalling", path: "/telecalling", icon: PhoneCall },
         { name: "Auctions", path: "/auctions", icon: Gavel },
         { name: "Customers", path: "/customers", icon: Users },
+        { name: "Sales", path: "/sales", icon: BarChart2 },
         ...disabledCommon,
       ];
     }
