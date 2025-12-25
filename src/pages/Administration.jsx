@@ -79,6 +79,7 @@ const Administration = () => {
                     bgClass="bg-slate-100"
                     colorClass="text-slate-600"
                     hoverBgClass="group-hover:bg-slate-200"
+                    to="/settings"
                 />
 
                 <div className="h-6"></div>

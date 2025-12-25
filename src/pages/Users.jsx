@@ -1,212 +1,159 @@
-import React, { useState, useEffect } from 'react';
-import {
-    Search, Plus, ChevronLeft, ChevronRight, Edit3, Trash2,
-    Phone, Mail, MapPin
-} from 'lucide-react';
-import { useHeader } from '../context/HeaderContext';
-import Table from '../components/Table';
+import React, { useEffect, useMemo, useState } from "react";
+import { useHeader } from "../context/HeaderContext";
 
-// Mobile User Card Component
-const UserCardMobile = ({ user }) => (
-    <div className="bg-white p-4 shadow-sm border border-gray-100 flex flex-col gap-3">
-        <div className="flex justify-between items-start">
-            <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg">
-                    {user.firstName[0]}{user.lastName[0]}
-                </div>
-                <div>
-                    <h3 className="font-bold text-slate-900">{user.firstName} {user.lastName}</h3>
-                    <p className="text-sm text-slate-500 font-medium">{user.designation}</p>
-                </div>
-            </div>
-            <div className="flex gap-2">
-                <button className="p-2 text-slate-400 hover:text-blue-600 bg-slate-50">
-                    <Edit3 className="w-4 h-4" />
-                </button>
-                <button className="p-2 text-slate-400 hover:text-red-600 bg-slate-50">
-                    <Trash2 className="w-4 h-4" />
-                </button>
-            </div>
-        </div>
+import UsersStatsCards from "../components/Users/UserStatsCards";
+import UsersTabs from "../components/Users/UsersTabs";
+import UsersTable from "../components/Users/UsersTable";
+import UsersRoleFilter from "../components/Users/UsersRoleFIlter";
 
-        <div className="flex flex-col gap-2 mt-1 pt-3 border-t border-gray-50">
-            <div className="flex items-center gap-2 text-sm text-slate-600">
-                <Phone className="w-4 h-4 text-slate-400" />
-                {user.phone}
-            </div>
-            <div className="flex items-center gap-2 text-sm text-slate-600">
-                <Mail className="w-4 h-4 text-slate-400" />
-                {user.email}
-            </div>
-            <div className="flex items-center gap-2 text-sm text-slate-600">
-                <MapPin className="w-4 h-4 text-slate-400" />
-                <span className="truncate">{user.address}, {user.city}</span>
-            </div>
-        </div>
-    </div>
-);
+import { useUsersManagement } from "../hooks/useUsersmanagement";
+import { useNavigate } from "react-router-dom";
 
-import { usersData } from '../services/users';
-
-const Users = () => {
+export default function Users() {
     const { setTitle, setSearchContent, setActionsContent } = useHeader();
-    const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const navigate = useNavigate();
 
-    // Use shared data from services
-    const allUsers = usersData.map((u, index) => ({
-        id: index + 1,
-        ...u,
-        phone: u.phone || '+91 00000 00000',
-        address: u.designation || 'Staff',
-        city: u.allowedCities ? u.allowedCities[0] : 'KOLKATA'
-    }));
+    const token = JSON.parse(localStorage.getItem("token"))
+
+    const [activeTab, setActiveTab] = useState("all");
+    const [search, setSearch] = useState("");
+    const [roleFilter, setRoleFilter] = useState("ALL");
+
+    const { loading, error, counts, lists, refresh, updateStatus, updatingId } =
+        useUsersManagement(token);
+
+    const activeList = lists[activeTab] || [];
+
+    const filtered = useMemo(() => {
+        const q = search.trim().toLowerCase();
+
+        return activeList.filter((u) => {
+            // Role filter
+            const role = String(u.userRole || "").toUpperCase();
+            const roleOk = roleFilter === "ALL" ? true : role === roleFilter;
+
+            if (!roleOk) return false;
+
+            // Search filter
+            if (!q) return true;
+
+            const name = (u.userName || "").toLowerCase();
+            const email = (u.email || "").toLowerCase();
+            const phone = (u.phoneNumber || "").toLowerCase();
+            const loc = (u.location || "").toLowerCase();
+            const kam = (u.assignedKam || "").toLowerCase();
+
+            return (
+                name.includes(q) ||
+                email.includes(q) ||
+                phone.includes(q) ||
+                role.toLowerCase().includes(q) ||
+                loc.includes(q) ||
+                kam.includes(q)
+            );
+        });
+    }, [activeList, search, roleFilter]);
+
+
+    const [pageByTab, setPageByTab] = useState({
+        all: 1,
+        pending: 1,
+        approved: 1,
+        rejected: 1,
+    });
+
+    const itemsPerPage = 10;
+    const currentPage = pageByTab[activeTab] || 1;
+
+    const totalItems = filtered.length;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+    const pageRows = filtered.slice(startIndex, endIndex);
+
+    const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+    const canPrev = currentPage > 1;
+    const canNext = currentPage < totalPages;
+
+    const onSetPage = (p) => setPageByTab((prev) => ({ ...prev, [activeTab]: p }));
+    const onPrev = () => canPrev && onSetPage(currentPage - 1);
+    const onNext = () => canNext && onSetPage(currentPage + 1);
 
     useEffect(() => {
-        setTitle('Users');
-        setSearchContent(
-            <div className="relative group w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-hover:text-primary transition-colors" />
-                <input
-                    type="text"
-                    placeholder="Search by name, role, or email..."
-                    className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-xs font-bold uppercase tracking-widest placeholder:text-slate-300"
-                    value={searchQuery}
-                    onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                />
-            </div>
-        );
-        setActionsContent(
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white hover:bg-blue-600 transition-colors font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20">
-                <Plus className="w-5 h-5" />
-                <span className="hidden sm:inline">Add User</span>
-            </button>
-        );
-    }, [setTitle, setSearchContent, setActionsContent, searchQuery]);
+        setTitle("User Management");
+        setSearchContent(null);
+        setActionsContent(null);
+    }, [setTitle, setSearchContent, setActionsContent]);
 
-    const filteredUsers = allUsers.filter(user =>
-        (user.firstName + ' ' + user.lastName).toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (user.designation || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    // Pagination Logic
-    const totalItems = filteredUsers.length;
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentUsers = filteredUsers.slice(startIndex, endIndex);
-
-    const pagination = {
-        currentPage,
-        totalItems,
-        startIndex,
-        endIndex: Math.min(endIndex, totalItems),
-        onNext: () => setCurrentPage(p => p + 1),
-        onPrev: () => setCurrentPage(p => p - 1),
-        canNext: currentPage * itemsPerPage < totalItems,
-        canPrev: currentPage > 1
+    const onTabChange = (tab) => {
+        setActiveTab(tab);
+        setPageByTab((prev) => ({ ...prev, [tab]: 1 }));
     };
 
-    // Table Columns
-    const columns = [
-        {
-            header: 'Name',
-            render: (user) => (
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
-                        {user.firstName[0]}{user.lastName[0]}
-                    </div>
-                    <div>
-                        <p className="font-semibold text-slate-900 text-xs">{user.firstName} {user.lastName}</p>
-                    </div>
-                </div>
-            )
-        },
-        {
-            header: 'Designation',
-            render: (user) => (
-                <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700">
-                    {user.designation || 'Staff'}
-                </span>
-            )
-        },
-        {
-            header: 'Email',
-            render: (user) => (
-                <span className="text-xs text-slate-600">{user.email}</span>
-            )
-        },
-        {
-            header: 'Allocated Cities',
-            render: (user) => (
-                <div className="flex flex-wrap gap-1">
-                    {user.allowedCities && user.allowedCities.map((city, idx) => (
-                        <span key={idx} className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">
-                            {city}{idx < user.allowedCities.length - 1 ? ',' : ''}
-                        </span>
-                    ))}
-                </div>
-            )
-        },
-        {
-            header: 'Actions',
-            align: 'right',
-            render: (user) => (
-                <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors" title="Edit">
-                        <Edit3 className="w-3.5 h-3.5" />
-                    </button>
-                    <button className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Delete">
-                        <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                </div>
-            ),
-            width: '80px'
-        }
-    ];
+    const onRoleChange = (val) => {
+        setRoleFilter(val);
+        onSetPage(1);
+    };
+
+    const handleRowClick = (user) => {
+        if (!user?._id) return;
+        navigate(`/users/${user._id}`, { state: { user } });
+    };
 
     return (
-        <div className="flex flex-col h-full bg-background-light font-display">
-            {/* Content Area */}
-            <div className="flex-1 overflow-auto bg-background-light">
+        <div className="h-full w-full bg-[#f7f9fc]">
+            <div className="p-4 md:p-6 space-y-4">
+                <UsersStatsCards counts={counts} loading={loading} />
 
-                {/* Mobile View: Cards */}
-                <div className="flex flex-col gap-4 md:hidden pb-20 p-4">
-                    {currentUsers.length > 0 ? (
-                        currentUsers.map(user => (
-                            <UserCardMobile key={user.id} user={user} />
-                        ))
-                    ) : (
-                        <div className="text-center py-10 text-slate-400">
-                            No users found matching "{searchQuery}"
-                        </div>
-                    )}
-                    {/* Mobile Pagination */}
-                    <div className="flex items-center justify-between pt-4">
-                        <span className="text-xs text-slate-500">Page {currentPage}</span>
-                        <div className="flex gap-2">
-                            <button disabled={!pagination.canPrev} onClick={pagination.onPrev} className="p-2 bg-white shadow-sm disabled:opacity-50"><ChevronLeft className="w-4 h-4" /></button>
-                            <button disabled={!pagination.canNext} onClick={pagination.onNext} className="p-2 bg-white shadow-sm disabled:opacity-50"><ChevronRight className="w-4 h-4" /></button>
+                <div className="bg-white border border-gray-100 shadow-sm">
+                    <div className="p-3 md:p-4 border-b border-gray-100 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                        <UsersTabs active={activeTab} counts={counts} onChange={onTabChange} />
+
+                        <div className="flex items-center gap-2 w-full md:w-[520px]">
+                            <input
+                                value={search}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    onSetPage(1);
+                                }}
+                                placeholder="Search by name, role, email, phone, location..."
+                                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-xs font-bold uppercase tracking-widest placeholder:text-slate-300"
+                            />
+
+                            <UsersRoleFilter value={roleFilter} onChange={onRoleChange} />
+
+                            <button
+                                onClick={refresh}
+                                className="px-3 py-2 bg-gray-50 border border-gray-200 hover:bg-gray-100 text-xs font-black uppercase tracking-widest"
+                            >
+                                Refresh
+                            </button>
                         </div>
                     </div>
-                </div>
 
-                {/* Desktop View: Table */}
-                <div className="hidden md:block h-full overflow-hidden md:px-0">
-                    <Table
-                        columns={columns}
-                        data={currentUsers}
-                        pagination={pagination}
-                        keyField="id"
-                    />
+                    {error ? (
+                        <div className="p-6 text-sm text-red-600">{error}</div>
+                    ) : (
+                        <UsersTable
+                            tabKey={activeTab}
+                            isLoading={loading}
+                            rows={pageRows}
+                            totalItems={totalItems}
+                            startIndex={startIndex}
+                            endIndex={endIndex}
+                            currentPage={currentPage}
+                            itemsPerPage={itemsPerPage}
+                            onSetPage={onSetPage}
+                            onPrev={onPrev}
+                            onNext={onNext}
+                            canPrev={canPrev}
+                            canNext={canNext}
+                            onStatusChange={updateStatus}
+                            updatingId={updatingId}
+                            onRowClick={handleRowClick}
+                        />
+                    )}
                 </div>
             </div>
         </div>
     );
-};
-
-export default Users;
+}
