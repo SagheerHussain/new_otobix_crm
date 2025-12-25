@@ -3,9 +3,15 @@ import Table from "../Table"; // ✅ adjust path if needed
 import StatusDropdown from "./StatusDropdown";
 
 const pillClass = (status) => {
+  console.log(status)
   const s = String(status || "").toLowerCase();
   if (s === "approved") return "bg-emerald-50 text-emerald-700 border border-emerald-100";
   if (s === "rejected") return "bg-red-50 text-red-700 border border-red-100";
+  if (s === "dealer") return "bg-sky-50 text-sky-700 border border-sky-100"
+  if (s === "sales manager") return "bg-pink-50 text-pink-700 border border-pink-100"
+  if (s === "customer") return "bg-purple-50 text-purple-700 border border-purple-100"
+  if (s === "lead") return "bg-orange-50 text-orange-700 border border-orange-100"
+  if (s === "inspection") return "bg-lime-50 text-lime-700 border border-lime-100"
   return "bg-amber-50 text-amber-700 border border-amber-100";
 };
 
@@ -65,7 +71,7 @@ export default function UsersTable({
         header: "Role",
         width: "130px",
         render: (u) => (
-          <span className="inline-flex items-center px-2 py-1 text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 border border-slate-100">
+          <span className={`inline-flex items-center px-2 py-1 text-[10px] font-black uppercase tracking-widest ${pillClass(u.userRole)}`}>
             {u.userRole || "—"}
           </span>
         ),

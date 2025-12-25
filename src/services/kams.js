@@ -78,3 +78,27 @@ export async function deleteKam({ token, id }) {
     throw new Error(msg);
   }
 }
+
+
+
+const safeBase = BASE_URL?.endsWith("/api") ? BASE_URL.slice(0, -4) : BASE_URL;
+
+export const fetchKamsList = async (token) => {
+  const res = await axios.get(`${safeBase}/api/admin/kams/get-list`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
+
+export const assignKamToDealer = async ({ token, dealerId, kamId }) => {
+  const res = await axios.post(
+    `${safeBase}/api/admin/kams/assign-to-dealer`,
+    {
+      dealerId,
+      kamId: kamId || "", // ✅ empty string means unassign
+    },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+};
+
