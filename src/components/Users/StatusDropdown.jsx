@@ -18,21 +18,22 @@ function useOutsideClick(ref, handler) {
   }, [ref, handler]);
 }
 
-export default function StatusDropdown({
-  currentStatus,
-  disabled,
-  onSelect,
-}) {
+export default function StatusDropdown({ currentStatus, disabled, onSelect }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 
   useOutsideClick(wrapRef, () => setOpen(false));
 
+  const handleDropdownOpen = (e) => {
+    setOpen((v) => !v);
+    e.stopPropagation();
+  };
+
   return (
     <div className="relative" ref={wrapRef}>
       <button
         disabled={disabled}
-        onClick={() => setOpen((v) => !v)}
+        onClick={handleDropdownOpen}
         className={[
           "p-2 border border-gray-200 bg-white hover:bg-gray-50 transition-colors",
           disabled ? "opacity-50 cursor-not-allowed" : "",
@@ -45,7 +46,9 @@ export default function StatusDropdown({
       {open && (
         <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 shadow-lg z-50">
           {STATUS.map((s) => {
-            const active = String(currentStatus || "").toLowerCase() === String(s.value).toLowerCase();
+            const active =
+              String(currentStatus || "").toLowerCase() ===
+              String(s.value).toLowerCase();
             return (
               <button
                 key={s.value}

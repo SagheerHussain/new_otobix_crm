@@ -11,7 +11,7 @@ import Auctions from './pages/Auctions';
 import Sales from './pages/Sales';
 import LoginPage from './pages/LoginPage';
 import Authenticated from './components/Authenticated';
-import CustomersPage from './pages/CustomersPage';
+import Customers from './pages/Customers';
 import BidsHistory from './pages/BidsHistory';
 import CarsOverview from './pages/CarsOverview';
 import CarOverviewwDetail from './pages/CarOverviewDetail';
@@ -31,7 +31,7 @@ function App() {
             <Route path="administration" element={<Administration />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<UserDetails />} />
-            <Route path="customers" element={<CustomersPage />} />
+            <Route path="customers" element={<Customers />} />
             <Route path="telecalling" element={<Telecalling />} />
             <Route path="carsList" element={<Inspection />} />
             <Route path="carsList/:id" element={<InspectionDetails />} />
