@@ -15,9 +15,6 @@ export default function CustomersOverview({
   const active = summary?.activeCustomersLength ?? 0;
   const thisMonth = summary?.thisMonthCustomersLength ?? 0;
 
-  const dropdowns = summary?.carMakeModelVariantDropdownsLength ?? 0;
-  const banners = summary?.bannersLength ?? 0;
-
   return (
     <div className="space-y-6">
       <div>

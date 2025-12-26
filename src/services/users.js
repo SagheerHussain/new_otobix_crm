@@ -66,3 +66,15 @@ export async function updateUserApprovalStatus(token, userId, approvalStatus) {
   );
   return data;
 }
+
+
+export async function updateProfile(token, formData) {
+  const res = await axios.put(`${BASE_URL}/user/update-profile`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      // DO NOT set Content-Type manually for FormData; browser will set boundary.
+    },
+  });
+
+  return res.data; // { success, message, user }
+}
