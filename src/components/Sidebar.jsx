@@ -204,7 +204,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           >
             <div
               className="w-10 h-10 rounded-full bg-cover bg-center ring-2 ring-primary/30 transition-all"
-              style={{ backgroundImage: `url(${user?.image})` }}
+              style={{ backgroundImage: `url(${user?.imageUrl})` }}
             />
             <div className="flex-1 text-left">
               <h4 className="text-sm font-semibold text-black">
